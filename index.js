@@ -30,7 +30,17 @@ const User = require('./models/user')
 const rolesList=require('./config/rolesList')
 // const verifyJWT=require('./middleware/verifyJwt')
 const config={useNewUrlParser:true,useUnifiedTopology:true}
-mongoose.connect(CON_STR,config)
+const connectDb= async()=>{
+    try{
+        await  mongoose.connect(process.env.MONGO_URL,config)
+          console.log("db connected ",conn.connection.host)
+      }
+      catch(err){
+          console.log(err);
+      }
+      
+}
+
 
 app.use(express.static(path.join(__dirname,'public')))
 mongoose.connection.on('open',()=>{
@@ -39,7 +49,8 @@ mongoose.connection.on('open',()=>{
 mongoose.connection.on('close',(err)=>{
     console.log(err);
 })
-
+mongoose.set('strictQuery',false)//remove warnings from console
+//0hmcGW7VMWHy7cm5
 
 
 app.use(express.json({limit:'100mb'}))
