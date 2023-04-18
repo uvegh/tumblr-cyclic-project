@@ -22,7 +22,7 @@ const followers=require('./routes/followers')
 const updateUser=require('./routes/updateUser')
 const session = require('express-session')
 const multer=require('multer')
-const port=3001
+const PORT=process.env.PORT||3001
 const CON_STR="mongodb://localhost:27017/blog"
 const jwt=require('jsonwebtoken')
 
@@ -32,19 +32,19 @@ const rolesList=require('./config/rolesList')
 const config={useNewUrlParser:true,useUnifiedTopology:true}
 const connectDb= async()=>{
     try{
-        await  mongoose.connect(process.env.MONGO_URL,config)
+       const conn= await  mongoose.connect(process.env.MONGO_URL,config)
           console.log("db connected ",conn.connection.host)
-          mongoose.connection.on('open',()=>{
-            console.log('server connected');
-        })
+        //   mongoose.connection.on('open',()=>{
+        //     console.log('server connected');
+        // })
         app.listen(process.env.PORT||port,()=>console.log("server running on ",port))
       }
       catch(err){
           console.log(err);
-          
-mongoose.connection.on('close',(err)=>{
-    console.log(err);
-})
+          process.exit(1)
+// mongoose.connection.on('close',(err)=>{
+//     console.log(err);
+// })
       }
       
 }
@@ -84,3 +84,8 @@ app.use('/',reply)
 app.use('/',followers)
 app.use('/',updateUser)
 
+connectDb.then(()=>{
+    app.listen(PORT,()=>{
+        console.log("listening for requests");
+    })
+})
