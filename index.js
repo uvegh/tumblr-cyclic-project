@@ -34,21 +34,23 @@ const connectDb= async()=>{
     try{
         await  mongoose.connect(process.env.MONGO_URL,config)
           console.log("db connected ",conn.connection.host)
+          mongoose.connection.on('open',()=>{
+            console.log('server connected');
+        })
       }
       catch(err){
           console.log(err);
+          
+mongoose.connection.on('close',(err)=>{
+    console.log(err);
+})
       }
       
 }
 
 
 app.use(express.static(path.join(__dirname,'public')))
-mongoose.connection.on('open',()=>{
-    console.log('server connected');
-})
-mongoose.connection.on('close',(err)=>{
-    console.log(err);
-})
+
 mongoose.set('strictQuery',false)//remove warnings from console
 //0hmcGW7VMWHy7cm5
 
