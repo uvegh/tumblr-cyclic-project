@@ -25,13 +25,13 @@ app.post('/post',upload.single('file'),async(req,res)=>{
     //console.log(req);
     try{
         let newPost= new Post(req.body)
-      
+      console.log(newPost);
     //   //console.log("file", req.file);
     //   //console.log(req.file.path);
 if(req.file){
     newPost.file=req.file.path;
     
-    //console.log(req.file.path);
+    console.log(req.file.path);
 }
 
 await newPost.save()
@@ -46,7 +46,7 @@ res.json({
 const updateUserPost= await User.findByIdAndUpdate(req?.body?.user,{
     $push:{post:newPost._id}
 })
-// console.log(updateUserPost);
+ console.log(updateUserPost);
     }
     catch(err){
         console.log(err);

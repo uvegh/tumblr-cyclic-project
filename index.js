@@ -52,7 +52,7 @@ const connectDb= async()=>{
 
 app.use(express.static(path.join(__dirname,'public')))
 
-mongoose.set('strictQuery',false)//remove warnings from console
+//mongoose.set('strictQuery',false)//remove warnings from console
 //0hmcGW7VMWHy7cm5
 
 
