@@ -37,7 +37,7 @@ const connectDb= async()=>{
         //   mongoose.connection.on('open',()=>{
         //     console.log('server connected');
         // })
-        app.listen(process.env.PORT||port,()=>console.log("server running on ",port))
+     
       }
       catch(err){
           console.log(err);
@@ -84,7 +84,7 @@ app.use('/',reply)
 app.use('/',followers)
 app.use('/',updateUser)
 
-connectDb.then(()=>{
+connectDb().then(()=>{
     app.listen(PORT,()=>{
         console.log("listening for requests");
     })
