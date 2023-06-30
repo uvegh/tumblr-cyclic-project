@@ -9,7 +9,7 @@ tags:[{type:String}],
 likes:[{type:Schema.Types.ObjectId,ref:'likePost'}],
 text:{type:String},
 user:{
-   type:Schema.Types.ObjectId,ref:"user"
+   type:Schema.Types.ObjectId,ref:"user",required:true
 },
 file:{
    type:String
